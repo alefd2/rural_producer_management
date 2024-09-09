@@ -1,25 +1,43 @@
-GET http://localhost:3000/users
+### Login
+# @name loginUser
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+    "name": "alefasdf",
+    "password": "1234"
+}
+
 
 ###
 
-# @name currentUser
+GET http://localhost:3000/users
 
+
+### List Users
+# @name listUsers
+GET http://localhost:3000/users
+
+### Create User
+# @name createUser
 POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "alef",
+    "name": "alefasdf",
     "password": "1234",
     "active": true
 }
 
-@userId = {{ currentUser.response.body.id }}
+### Get Specific User
+# @name getUser
+GET http://localhost:3000/users/cm0ucaigi00019cun946mpihf
 
-###
+### Delete Specific User
+# @name deleteUser
+DELETE http://localhost:3000/users/cm0ucaigi00019cun946mpihf
 
-GET http://localhost:3000/users/{{userId}}
-
-###
-
-
-DELETE http://localhost:3000/users/{{userId}}
+### List Producers
+# @name listProducers
+GET http://localhost:3000/producers
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbTB1Yzg0NDQwMDAwOWN1bjJmeDBvMDhoIiwidXNlck5hbWUiOiJhbGVmYXNkZiIsImlhdCI6MTcyNTg1NjQxMywiZXhwIjoxNzI1ODg3MDEzfQ.1l8eOCKA3RTxCWREmPbjqEe7aUINc4qxOyN4zndp18Y

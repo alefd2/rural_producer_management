@@ -25,6 +25,14 @@ export class UsersService {
     });
   }
 
+  async findOneByName(userName: string) {
+    return await this.prismaService.users.findFirst({
+      where: {
+        name: userName,
+      },
+    });
+  }
+
   update(id: string, updateUserDto: UpdateUserDto) {
     return this.prismaService.users.update({
       data: updateUserDto,
