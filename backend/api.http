@@ -8,8 +8,9 @@ Content-Type: application/json
     "password": "1234"
 }
 
-
 ###
+
+@bearer = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbTB1a2d5cHcwMDAwNnFrcDZodzJyc212IiwidXNlck5hbWUiOiJhbGVmIG9saXYgMiIsImlhdCI6MTcyNTg2MjA5NywiZXhwIjoxNzI1ODkyNjk3fQ.JTewv0pDp16gCu28zzMf3K4R9Z84BlGC7sf_JOOyg6w
 
 GET http://localhost:3000/users
 
@@ -29,6 +30,18 @@ Content-Type: application/json
     "active": true
 }
 
+### Update User
+# @name createUser
+PATCH  http://localhost:3000/users/cm0ukgypw00006qkp6hw2rsmv
+Content-Type: application/json
+
+{
+    "name": "alef oliv 2",
+    "password": "1234"
+}
+
+### 
+
 ### Get Specific User
 # @name getUser
 GET http://localhost:3000/users/cm0ucaigi00019cun946mpihf
@@ -37,7 +50,91 @@ GET http://localhost:3000/users/cm0ucaigi00019cun946mpihf
 # @name deleteUser
 DELETE http://localhost:3000/users/cm0ucaigi00019cun946mpihf
 
+
+
+######## Producers
+
+
+### Create Producers
+# @name createProducers
+POST http://localhost:3000/producers
+Content-Type: application/json
+Authorization: Bearer {{bearer}}
+
+{
+  "document": "07111094352",
+  "producerName":"alef oliveira",
+  "farmNAme": "fazenda alef",
+  "city": "Fortaleza",
+  "state":"Ceara",
+  "areaInHectares": "12536",
+  "arableAreaInHectares":536,
+  "vegetationAreaInHectares":536,
+  "plantedCrops":["Milho, Arroz"],
+  "usersId": "cm0ukgypw00006qkp6hw2rsmv"
+}
+
+### Edit Producers
+# @name editProducers
+PATCH  http://localhost:3000/producers/cm0uknzj30001p5xe2jg8vrxz
+Content-Type: application/json
+Authorization: Bearer {{bearer}}
+
+{
+  "document": "07111094352",
+  "producerName":"alef oliveira mudou",
+  "farmNAme": "fazenda alef",
+  "city": "Fortaleza",
+  "state":"CE",
+  "areaInHectares": 12536,
+  "arableAreaInHectares":536,
+  "vegetationAreaInHectares":536,
+
+  "usersId": "cm0ukgypw00006qkp6hw2rsmv"
+}
+
 ### List Producers
 # @name listProducers
 GET http://localhost:3000/producers
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbTB1Yzg0NDQwMDAwOWN1bjJmeDBvMDhoIiwidXNlck5hbWUiOiJhbGVmYXNkZiIsImlhdCI6MTcyNTg1NjQxMywiZXhwIjoxNzI1ODg3MDEzfQ.1l8eOCKA3RTxCWREmPbjqEe7aUINc4qxOyN4zndp18Y
+Authorization: Bearer {{bearer}}
+
+
+### List Producers
+# @name listProducers
+GET http://localhost:3000/producers/
+Authorization: Bearer {{bearer}}
+
+
+### Delete Producers
+# @name deleteProducers
+DELETE  http://localhost:3000/producers/cm0ukn7k500016qkpvo262676
+Authorization: Bearer {{bearer}}
+
+
+######## Producers
+
+
+### List dashboard
+# @name listProducers
+GET http://localhost:3000/dashboard/data
+Authorization: Bearer {{bearer}}
+
+###
+GET http://localhost:3000/dashboard/total-farms
+Authorization: Bearer {{bearer}}
+
+###
+GET http://localhost:3000/dashboard/total-area
+Authorization: Bearer {{bearer}}
+
+###
+GET http://localhost:3000/dashboard/farms-by-state
+Authorization: Bearer {{bearer}}
+
+###
+GET http://localhost:3000/dashboard/farms-by-crops
+Authorization: Bearer {{bearer}}
+
+###
+GET http://localhost:3000/dashboard/land-use
+Authorization: Bearer {{bearer}}

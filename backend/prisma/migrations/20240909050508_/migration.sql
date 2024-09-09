@@ -1,3 +1,6 @@
+-- CreateEnum
+CREATE TYPE "PlantedCrops" AS ENUM ('Soja', 'Milho', 'Algodao', 'Cafe', 'CanaDeAcucar');
+
 -- CreateTable
 CREATE TABLE "RuralProducers" (
     "id" TEXT NOT NULL,
@@ -9,7 +12,7 @@ CREATE TABLE "RuralProducers" (
     "areaInHectares" DOUBLE PRECISION NOT NULL,
     "arableAreaInHectares" DOUBLE PRECISION NOT NULL,
     "vegetationAreaInHectares" DOUBLE PRECISION NOT NULL,
-    "plantedCrops" DOUBLE PRECISION NOT NULL,
+    "plantedCrops" "PlantedCrops" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "usersId" TEXT,

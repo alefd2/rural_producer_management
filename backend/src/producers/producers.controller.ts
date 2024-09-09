@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { ProducersService } from './producers.service';
 import { CreateProducerDto } from './dto/create-producer.dto';
@@ -19,30 +20,36 @@ export class ProducersController {
   constructor(private readonly producersService: ProducersService) {}
 
   @Post()
-  create(@Body() createProducerDto: CreateProducerDto) {
-    return this.producersService.create(createProducerDto);
+  async create(@Body() createProducerDto: CreateProducerDto) {
+    return await this.producersService.create(createProducerDto);
   }
 
   @Get()
-  findAll() {
-    return this.producersService.findAll();
+  async findAll() {
+    return await this.producersService.findAll();
+  }
+
+  @Get()
+  async findAllByUserId(@Param('id') id: string) {
+    return await this.producersService.findAllByUserId(id);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.producersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.producersService.findOne(id);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateProducerDto: UpdateProducerDto,
   ) {
-    return this.producersService.update(+id, updateProducerDto);
+    return await this.producersService.update(id, updateProducerDto);
   }
 
+  @HttpCode(204)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.producersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.producersService.remove(id);
   }
 }

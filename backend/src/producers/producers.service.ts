@@ -1,26 +1,78 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateProducerDto } from './dto/create-producer.dto';
 import { UpdateProducerDto } from './dto/update-producer.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class ProducersService {
-  create(createProducerDto: CreateProducerDto) {
-    return 'This action adds a new producer';
+  constructor(private readonly prismaService: PrismaService) {}
+
+  private validateAreas(
+    totalArea: number,
+    arableArea: number,
+    vegetationArea: number,
+  ) {
+    if (arableArea + vegetationArea > totalArea) {
+      return false;
+    }
+
+    return true;
   }
 
-  findAll() {
-    return `This action returns all producers`;
+  async create(createProducerDto: CreateProducerDto) {
+    const isNotAreaGreaterThanTotalFarm = this.validateAreas(
+      createProducerDto.areaInHectares,
+      createProducerDto.arableAreaInHectares,
+      createProducerDto.vegetationAreaInHectares,
+    );
+
+    if (!isNotAreaGreaterThanTotalFarm) {
+      throw new BadRequestException(
+        'A soma da área agricultável e da vegetação não pode ser maior que a área total da fazenda.',
+      );
+    }
+
+    return await this.prismaService.ruralProducers.create({
+      data: createProducerDto,
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} producer`;
+  async findAll() {
+    return await this.prismaService.ruralProducers.findMany();
   }
 
-  update(id: number, updateProducerDto: UpdateProducerDto) {
-    return `This action updates a #${id} producer`;
+  async findAllByUserId(id: string) {
+    return await this.prismaService.ruralProducers.findMany({
+      where: { id },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} producer`;
+  async findOne(id: string) {
+    return this.prismaService.ruralProducers.findUnique({
+      where: { id },
+    });
+  }
+
+  async update(id: string, updateProducerDto: UpdateProducerDto) {
+    const isNotAreaGreaterThanTotalFarm = this.validateAreas(
+      updateProducerDto.areaInHectares,
+      updateProducerDto.arableAreaInHectares,
+      updateProducerDto.vegetationAreaInHectares,
+    );
+    if (!isNotAreaGreaterThanTotalFarm) {
+      throw new BadRequestException(
+        'A soma da área agricultável e da vegetação não pode ser maior que a área total da fazenda.',
+      );
+    }
+    return this.prismaService.ruralProducers.update({
+      data: updateProducerDto,
+      where: { id },
+    });
+  }
+
+  async remove(id: string) {
+    return this.prismaService.ruralProducers.delete({
+      where: { id },
+    });
   }
 }

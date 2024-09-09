@@ -24,7 +24,7 @@ model Users {
 }
 
 model RuralProducers {
-  id                       String       @id @default(cuid())
+  id                       String   @id @default(cuid())
   document                 String
   producerName             String
   farmNAme                 String
@@ -33,17 +33,17 @@ model RuralProducers {
   areaInHectares           Float
   arableAreaInHectares     Float
   vegetationAreaInHectares Float
-  plantedCrops             PlantedCrops
-  createdAt                DateTime     @default(now())
-  updatedAt                DateTime     @updatedAt
-  Users                    Users?       @relation(fields: [usersId], references: [id])
+  plantedCrops             String[]
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  Users                    Users?   @relation(fields: [usersId], references: [id])
   usersId                  String?
 }
 
-enum PlantedCrops {
-  Soja
-  Milho
-  Algodao
-  Cafe
-  CanaDeAcucar
-}
+// enum PlantedCrops {
+//   Soja
+//   Milho
+//   Algodao
+//   Cafe
+//   CanaDeAcucar
+// }
