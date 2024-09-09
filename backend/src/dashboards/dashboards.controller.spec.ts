@@ -1,6 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DashboardController } from './dashboards.controller';
 import { DashboardsService } from './dashboards.service';
+import { AuthGuard } from '@nestjs/passport';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
+import { PrismaService } from '../prisma/prisma.service';
 
 describe('DashboardController', () => {
   let controller: DashboardController;
@@ -21,6 +25,37 @@ describe('DashboardController', () => {
             findLandUse: jest.fn(),
           },
         },
+        {
+          provide: AuthGuard('jwt'),
+          useValue: {
+            canActivate: jest.fn(() => true),
+          },
+        },
+        {
+          provide: ConfigService,
+          useValue: {
+            get: jest.fn((key: string) => {
+              if (key === 'JWT_SECRET') {
+                return 'test-secret';
+              }
+              return null;
+            }),
+          },
+        },
+        {
+          provide: JwtService,
+          useValue: {},
+        },
+        {
+          provide: PrismaService,
+          useValue: {
+            farm: {
+              count: jest.fn(),
+              aggregate: jest.fn(),
+              groupBy: jest.fn(),
+            },
+          },
+        },
       ],
     }).compile();
 
@@ -32,57 +67,72 @@ describe('DashboardController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call getDashboardData method and return correct data', async () => {
-    const result = {
-      totalFarms: 10,
-      totalAreaInHectares: 1000.5,
-      farmsByState: [{ state: 'SP', count: 5 }],
-      farmsByCrops: [{ crop: 'Soja', count: 3 }],
-      landUse: { arableAreaInHectares: 500, vegetationAreaInHectares: 300 },
-    };
-    jest.spyOn(service, 'getDashboardData').mockResolvedValue(result);
+  describe('getDashboardData', () => {
+    it('should call getDashboardData method and return correct data', async () => {
+      const result = {
+        totalFarms: 10,
+        totalAreaInHectares: 1000.5,
+        farmsByState: [{ state: 'SP', count: 5 }],
+        farmsByCrops: [{ crop: 'Soja', count: 3 }],
+        landUse: { arableAreaInHectares: 500, vegetationAreaInHectares: 300 },
+      };
+      jest.spyOn(service, 'getDashboardData').mockResolvedValue(result);
 
-    expect(await controller.getDashboardData()).toBe(result);
-    expect(service.getDashboardData).toHaveBeenCalled();
+      expect(await controller.getDashboardData()).toBe(result);
+      expect(service.getDashboardData).toHaveBeenCalled();
+    });
   });
 
-  it('should call getTotalFarms method and return total farms', async () => {
-    const result = 10;
-    jest.spyOn(service, 'findTotalFarms').mockResolvedValue(result);
+  describe('getTotalFarms', () => {
+    it('should call findTotalFarms method and return total farms', async () => {
+      const result = 10;
+      jest.spyOn(service, 'findTotalFarms').mockResolvedValue(result);
 
-    expect(await controller.getTotalFarms()).toBe(result);
-    expect(service.findTotalFarms).toHaveBeenCalled();
+      expect(await controller.getTotalFarms()).toBe(result);
+      expect(service.findTotalFarms).toHaveBeenCalled();
+    });
   });
 
-  it('should call getTotalAreaInHectares method and return total area', async () => {
-    const result = 1000.5;
-    jest.spyOn(service, 'findTotalAreaInHectares').mockResolvedValue(result);
+  describe('getTotalAreaInHectares', () => {
+    it('should call findTotalAreaInHectares method and return total area', async () => {
+      const result = 1000.5;
+      jest.spyOn(service, 'findTotalAreaInHectares').mockResolvedValue(result);
 
-    expect(await controller.getTotalAreaInHectares()).toBe(result);
-    expect(service.findTotalAreaInHectares).toHaveBeenCalled();
+      expect(await controller.getTotalAreaInHectares()).toBe(result);
+      expect(service.findTotalAreaInHectares).toHaveBeenCalled();
+    });
   });
 
-  it('should call getFarmsByState method and return farms by state', async () => {
-    const result = [{ state: 'SP', count: 5 }];
-    jest.spyOn(service, 'findFarmsByState').mockResolvedValue(result);
+  describe('getFarmsByState', () => {
+    it('should call findFarmsByState method and return farms by state', async () => {
+      const result = [{ state: 'SP', count: 5 }];
+      jest.spyOn(service, 'findFarmsByState').mockResolvedValue(result);
 
-    expect(await controller.getFarmsByState()).toBe(result);
-    expect(service.findFarmsByState).toHaveBeenCalled();
+      expect(await controller.getFarmsByState()).toBe(result);
+      expect(service.findFarmsByState).toHaveBeenCalled();
+    });
   });
 
-  it('should call getFarmsByCrops method and return farms by crops', async () => {
-    const result = [{ crop: 'Soja', count: 3 }];
-    jest.spyOn(service, 'findFarmsByCrops').mockResolvedValue(result);
+  describe('getFarmsByCrops', () => {
+    it('should call findFarmsByCrops method and return farms by crops', async () => {
+      const result = [{ crop: 'Soja', count: 3 }];
+      jest.spyOn(service, 'findFarmsByCrops').mockResolvedValue(result);
 
-    expect(await controller.getFarmsByCrops()).toBe(result);
-    expect(service.findFarmsByCrops).toHaveBeenCalled();
+      expect(await controller.getFarmsByCrops()).toBe(result);
+      expect(service.findFarmsByCrops).toHaveBeenCalled();
+    });
   });
 
-  it('should call getLandUse method and return land use data', async () => {
-    const result = { arableAreaInHectares: 500, vegetationAreaInHectares: 300 };
-    jest.spyOn(service, 'findLandUse').mockResolvedValue(result);
+  describe('getLandUse', () => {
+    it('should call findLandUse method and return land use data', async () => {
+      const result = {
+        arableAreaInHectares: 500,
+        vegetationAreaInHectares: 300,
+      };
+      jest.spyOn(service, 'findLandUse').mockResolvedValue(result);
 
-    expect(await controller.getLandUse()).toBe(result);
-    expect(service.findLandUse).toHaveBeenCalled();
+      expect(await controller.getLandUse()).toBe(result);
+      expect(service.findLandUse).toHaveBeenCalled();
+    });
   });
 });
