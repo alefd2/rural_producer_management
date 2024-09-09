@@ -1,0 +1,25 @@
+GET http://localhost:3000/users
+
+###
+
+# @name currentUser
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "alef",
+    "password": "1234",
+    "active": true
+}
+
+@userId = {{ currentUser.response.body.id }}
+
+###
+
+GET http://localhost:3000/users/{{userId}}
+
+###
+
+
+DELETE http://localhost:3000/users/{{userId}}
