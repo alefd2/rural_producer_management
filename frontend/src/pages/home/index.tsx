@@ -62,7 +62,7 @@ export function HomePage() {
     <>
       <Box mb={4}>
         <Typography mb={0} variant="h6" color="primary">
-          Bem-vindo à plataforma de gestão
+          Bem-vindo à plataforma
         </Typography>
         <Typography mb={0} variant="body2" color="secondary">
           Deixamos tudo atualizado para você!
