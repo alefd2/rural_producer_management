@@ -77,6 +77,7 @@ export function ProducersPage() {
       ),
     },
   ];
+
   return (
     <>
       <Box mb={6}>

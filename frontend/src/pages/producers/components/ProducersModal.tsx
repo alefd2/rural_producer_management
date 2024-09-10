@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Dialog,
@@ -20,6 +19,7 @@ import { Producers } from "../../../hooks/useProducers/@types";
 import useUpdateProducers from "../../../hooks/useProducers/useEditProducers";
 import { AuthContextType } from "../../../contexts/@types";
 import { useAuth } from "../../../contexts/AuthContext";
+import { validarCNPJ, validarCPF } from "../../../shared/validateDocument";
 
 interface ProducersModalProps {
   isPassChange: boolean;
@@ -68,7 +68,15 @@ const schemaValidation = yup.object().shape({
     .string()
     .required("O campo é obrigatório")
     .length(2, "O campo deve ter exatamente 2 caracteres"),
-  document: yup.string().required("O campo é obrigatório"),
+  document: yup
+    .string()
+    .required("O campo é obrigatório")
+    .test("cpf-cnpj-valido", "Documento inválido", function (value) {
+      if (!value) return false;
+      const isCPF = value.length <= 11;
+      const isCNPJ = value.length > 11;
+      return (isCPF && validarCPF(value)) || (isCNPJ && validarCNPJ(value));
+    }),
   farmNAme: yup.string().required("O campo é obrigatório"),
   producerName: yup.string().required("O campo é obrigatório"),
   // plantedCrops: yup.string().required("O campo é obrigatório"),
