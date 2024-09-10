@@ -20,6 +20,7 @@ export class AuthService {
   private jwtExpirationTime: number;
 
   async signIn(createAuthDto: CreateAuthDto): Promise<AuthResponseDto> {
+    console.log('asdf');
     const foundUser = await this.usersService.findOneByName(
       createAuthDto.userName,
     );
@@ -40,10 +41,10 @@ export class AuthService {
       userName: foundUser.name,
     };
 
-    const token = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload);
 
     return {
-      token,
+      accessToken,
       expiresIn: this.jwtExpirationTime,
     };
   }
