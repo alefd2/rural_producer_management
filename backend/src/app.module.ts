@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ProducersModule } from './producers/producers.module';
 import { AuthModule } from './auth/auth.module';
 import { DashboardsModule } from './dashboards/dashboards.module';
+import { InitializationService } from './initialization/initialization.service';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { DashboardsModule } from './dashboards/dashboards.module';
     DashboardsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, InitializationService],
 })
 export class AppModule {}

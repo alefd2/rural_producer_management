@@ -42,4 +42,9 @@ export class DashboardController {
   async getLandUse() {
     return await this.dashboarService.findLandUse();
   }
+
+  @Get('crop-ranking')
+  async getRanking() {
+    return await this.dashboarService.getCropsRanking();
+  }
 }

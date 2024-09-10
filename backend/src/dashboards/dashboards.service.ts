@@ -11,6 +11,7 @@ export class DashboardsService {
     const farmsByState = await this.findFarmsByState();
     const farmsByCrops = await this.findFarmsByCrops();
     const landUse = await this.findLandUse();
+    const cropsRanking = await this.getCropsRanking();
 
     return {
       totalFarms,
@@ -18,6 +19,7 @@ export class DashboardsService {
       farmsByState,
       farmsByCrops,
       landUse,
+      cropsRanking,
     };
   }
 
@@ -74,5 +76,31 @@ export class DashboardsService {
       arableAreaInHectares: landUse._sum.arableAreaInHectares,
       vegetationAreaInHectares: landUse._sum.vegetationAreaInHectares,
     };
+  }
+
+  async getCropsRanking() {
+    const crops = await this.prismaService.ruralProducers.findMany({
+      select: {
+        plantedCrops: true,
+        arableAreaInHectares: true,
+      },
+    });
+
+    const cropMap = new Map<string, number>();
+
+    crops.forEach((producer) => {
+      producer.plantedCrops.forEach((crop) => {
+        if (!cropMap.has(crop)) {
+          cropMap.set(crop, 0);
+        }
+        cropMap.set(crop, cropMap.get(crop) + producer.arableAreaInHectares);
+      });
+    });
+
+    const sortedCrops = Array.from(cropMap.entries())
+      .map(([crop, totalArea]) => ({ crop, totalArea }))
+      .sort((a, b) => b.totalArea - a.totalArea);
+
+    return sortedCrops;
   }
 }
