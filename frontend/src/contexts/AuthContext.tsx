@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { jwtDecode } from "jwt-decode";
 import axios, { AxiosResponse } from "axios";
 import React, {
   createContext,
@@ -8,7 +10,7 @@ import React, {
   ReactNode,
 } from "react";
 import { useSnackbar } from "../components/Snackbar";
-import { BASE_URL } from "../services/api";
+import { BASE_URL } from "../shared/api";
 import { parseCookies, setCookie, destroyCookie } from "nookies";
 import { AuthContextType, AuthLocalStorage } from "./@types";
 
@@ -16,6 +18,7 @@ export const authLocalStorageInitial: AuthLocalStorage = {
   accessToken: "",
   expiresIn: 0,
   isAuthenticated: false,
+  userId: "",
 };
 
 const api = axios.create();
@@ -33,10 +36,12 @@ const getStorage = (): AuthLocalStorage => {
       if (parseToken === undefined) {
         return authLocalStorageInitial;
       }
+      const decodedToken: any = jwtDecode(parseToken);
       return {
         accessToken: parseToken,
         expiresIn: Number(parseExpiresIn),
         isAuthenticated: true,
+        userId: decodedToken.sub || "", // Ajuste conforme o nome do campo que contém o ID
       };
     } catch (error) {
       console.error(error);
@@ -75,10 +80,12 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         }> = await api.post(`${BASE_URL}/auth/login`, postData);
 
         if (status === 200 && accessToken) {
+          const decodedToken: any = jwtDecode(accessToken);
           const authLocalStorage: AuthLocalStorage = {
             accessToken,
             expiresIn,
             isAuthenticated: true,
+            userId: decodedToken.sub || "",
           };
 
           setCookie(undefined, "auth.token", accessToken, {
@@ -128,7 +135,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 };
 
 // Hook para usar o contexto de autenticação
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   return useContext(AuthContext);
 };

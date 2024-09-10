@@ -37,7 +37,7 @@ interface WrappedProps {
   children: ReactNode;
 }
 
-const Wrapped: React.FC<WrappedProps> = ({ children }) => {
+const Wrapped = ({ children }: WrappedProps) => {
   const { enqueueSnackbar } = useNotistack();
 
   const alert = useCallback(
@@ -81,10 +81,10 @@ interface SnackbarProviderProps {
   children: ReactNode;
 }
 
-const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) => {
+const SnackbarProvider = ({ children }: SnackbarProviderProps) => {
   return (
     <NotistackProvider
-      autoHideDuration={3000}
+      autoHideDuration={4000}
       maxSnack={5}
       preventDuplicate={false}
     >

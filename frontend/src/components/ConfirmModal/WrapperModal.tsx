@@ -10,7 +10,6 @@ import {
   DialogProps,
 } from "@mui/material";
 
-// Tipos para as props do WrapperModal
 interface WrapperModalProps<T> {
   proceed: (result: boolean) => void;
   open: boolean;
@@ -21,7 +20,7 @@ interface WrapperModalProps<T> {
   [key: string]: any;
 }
 
-// Tipagem para o componente passado ao WrapperModal
+// DEFAULT COMPONENT
 const WrapperModal = <T extends object>(Component: React.FC<T>) => {
   const ModalComponent: React.FC<WrapperModalProps<T>> = ({
     proceed,

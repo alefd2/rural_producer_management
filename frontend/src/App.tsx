@@ -4,7 +4,7 @@ import { HomePage } from "./pages/home";
 import Layout from "./interfaces/Layout";
 import { AuthContextType } from "./contexts/@types";
 import { useAuth } from "./contexts/AuthContext";
-import { ProducersPage } from "./pages/propducers";
+import { ProducersPage } from "./pages/producers";
 import { UsersPage } from "./pages/users";
 
 function App() {

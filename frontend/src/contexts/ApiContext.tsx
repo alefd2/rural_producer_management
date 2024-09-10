@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import React, {
   createContext,
@@ -6,33 +7,39 @@ import React, {
   useMemo,
   ReactNode,
 } from "react";
-import { BASE_URL } from "../services/api";
-import { AuthContextType, useAuth } from "./AuthContext";
+import { BASE_URL } from "../shared/api";
+import { useAuth } from "./AuthContext";
+import { AuthContextType } from "./@types";
+
+interface ApiError {
+  erros: {
+    default?: string;
+    [key: string]: any;
+  };
+  message?: string;
+}
 
 interface ApiContextType {
-  get: (
-    url: string,
-    axiosRequestConfig?: AxiosRequestConfig
-  ) => Promise<unknown>;
+  get: (url: string, axiosRequestConfig?: AxiosRequestConfig) => Promise<any>;
   post: (
     url: string,
-    data?: unknown,
+    data?: any,
     axiosRequestConfig?: AxiosRequestConfig
-  ) => Promise<unknown>;
+  ) => Promise<any>;
   put: (
     url: string,
-    data?: unknown,
+    data?: any,
     axiosRequestConfig?: AxiosRequestConfig
-  ) => Promise<unknown>;
+  ) => Promise<any>;
   patch: (
     url: string,
-    data?: unknown,
+    data?: any,
     axiosRequestConfig?: AxiosRequestConfig
-  ) => Promise<unknown>;
+  ) => Promise<any>;
   _delete: (
     url: string,
     axiosRequestConfig?: AxiosRequestConfig
-  ) => Promise<unknown>;
+  ) => Promise<any>;
   request: (axiosRequestConfig: AxiosRequestConfig) => Promise<unknown>;
 }
 
@@ -51,8 +58,6 @@ export const ApiContextProvider: React.FC<ApiContextProviderProps> = ({
     let headers: Record<string, string> = {};
     if (authLoginResponse.accessToken) {
       headers = {
-        // id: companyId,
-        // user: currentUser.user_id,
         Authorization: `Bearer ${authLoginResponse.accessToken}`,
       };
     }
@@ -67,12 +72,16 @@ export const ApiContextProvider: React.FC<ApiContextProviderProps> = ({
           return data;
         }
       } catch (error) {
-        if (
-          axios.isAxiosError(error) &&
-          // error.response?.status === 401
-          error.response?.data.erros.default === "Não autenticado"
-        ) {
-          logoff();
+        if (axios.isAxiosError(error)) {
+          const apiError = error.response?.data as ApiError;
+
+          if (apiError?.erros?.default === "Não autenticado") {
+            logoff();
+          }
+
+          const errorMessage = apiError?.message || "Erro desconhecido";
+          console.error("Error details:", apiError);
+          throw new Error(errorMessage);
         }
         throw error;
       }
@@ -156,7 +165,6 @@ export const ApiContextProvider: React.FC<ApiContextProviderProps> = ({
   );
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useApi = (): ApiContextType => {
   const context = useContext(ApiContext);
   if (context === undefined) {

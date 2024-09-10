@@ -7,7 +7,7 @@ import { ContextProvider } from "./contexts/GlobalContext.tsx";
 import { lightTheme } from "./themes/theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClientProvider } from "react-query";
-import { queryClient } from "./services/queryClient.ts";
+import { queryClient } from "./shared/queryClient.ts";
 import SnackbarProvider from "./components/Snackbar/index.tsx";
 import ModalProvider from "./components/ConfirmModal/ModalProvider.tsx";
 import ErrorBoundary from "./ErrorBoundary.tsx";

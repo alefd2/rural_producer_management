@@ -2,6 +2,7 @@ export interface AuthLocalStorage {
   accessToken: string
   isAuthenticated: boolean
   expiresIn: number
+  userId: string
 }
 
 export interface AuthContextType {

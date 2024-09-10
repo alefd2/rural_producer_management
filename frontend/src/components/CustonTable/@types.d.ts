@@ -2,23 +2,14 @@
 import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid"
 import { ReactNode } from "react"
 
-// Tipos personalizados
-export type CustomType =
-  | "accessLevel"
-  | "status"
-  | "situationType"
-  | "simpleStatusBoolean"
-  | "defaultBadge"
-  | "simpleKmBadge"
-  | "action"
-
-// Definição do tipo para as colunas
 export interface CustomGridColDef extends GridColDef {
   customType?: CustomType
   renderCell?: (params: GridRenderCellParams<any, any>) => ReactNode
 }
+export interface CustomGridColDef extends GridColDef {
+  customType?: "default" | "list"
+}
 
-// Tipagem para as propriedades da tabela
 interface CustonTableProps {
   rows: {
     data: any[]
@@ -35,4 +26,5 @@ interface TableSimpleProps {
   rows: GridRowsProp
   columns: CustomGridColDef[]
   props?: object
+  renderCell?: (params: GridRenderCellParams<any, any>) => ReactNode
 }
