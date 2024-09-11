@@ -25,12 +25,6 @@ export function UsersPage() {
   const { confirm } = useModal();
   const { mutate: deleteUser } = useDeleteUser();
 
-  const handleOpenModal = () => {
-    setUserModalOpen(true);
-    setUserEdit(undefined);
-    setIsPassChange(false);
-  };
-
   const handleClose = () => setUserModalOpen(false);
 
   const handleModalEdit = (user: any) => {

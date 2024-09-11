@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import * as yup from "yup"
-
 export function validarCPF(cpf: string) {
   cpf = cpf.replace(/[^\d]+/g, "")
   if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false
