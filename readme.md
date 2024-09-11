@@ -101,3 +101,13 @@ Passos para rodar este projeto
          -  destaco que dentro dos componentes o natural é manter os comp de comum uso. Mas dentro da proposta, não consegui componentizar ou abtrair os componentes preferindo assim criar um novo quando necessário. Reitaro que a arquitetura mais próxima que utilizei foi o MVC(MODEL, VIEW e CONTROLLER).
 
 
+## Imagens
+
+    Imagens do projeto buildado localmente
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+  <div style=" display: flex; gap: 10px">
+      <img src="./docs/image copy.png" alt="alt text" style="width: 50%; heigth: 100%; border-radius:10px">
+      <img src="./docs/image.png" alt="alt text" style="width: 50%; border-radius:10px">
+  </div>
+<div style="display: flex; display: flex; gap: 10px">
