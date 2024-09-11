@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 4000
 
-CMD [ "start:build", "start:prod" ]
+CMD [ "build", "start:prod" ]
