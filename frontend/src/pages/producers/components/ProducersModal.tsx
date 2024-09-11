@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Button,
   Dialog,
@@ -116,7 +115,7 @@ export const ProducersModal = ({
         onSubmit={handleSubmitData}
         validationSchema={schemaValidation}
       >
-        {({ setFieldValue, values, handleSubmit, errors }) => (
+        {({ setFieldValue, values, handleSubmit }) => (
           <Form>
             <DialogTitle>
               {producers.id ? producers.farmNAme : " Novo usuário"}
@@ -184,7 +183,7 @@ export const ProducersModal = ({
                     multiple
                     options={allowedCrops}
                     value={values.plantedCrops as string[]}
-                    onChange={(event, newValue) => {
+                    onChange={(newValue) => {
                       setFieldValue(
                         "plantedCrops",
                         Array.isArray(newValue) ? newValue : []

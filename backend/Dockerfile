@@ -11,6 +11,9 @@ RUN yarn install --frozen-lockfile
 # Copia o restante do código fonte
 COPY . .
 
+# Executa o Prisma Generate para gerar o cliente Prisma
+RUN yarn prisma generate
+
 # Executa o build da aplicação
 RUN yarn build
 
@@ -21,6 +24,7 @@ WORKDIR /app
 
 # Copia apenas os arquivos necessários da imagem de build
 COPY --from=build /app/dist /app/dist
+COPY --from=build /app/node_modules /app/node_modules
 COPY package.json yarn.lock ./
 
 # Instala apenas as dependências de produção
@@ -28,4 +32,4 @@ RUN yarn install --frozen-lockfile --production
 
 EXPOSE 4000
 
-CMD ["yarn", "start:prod"]
+CMD ["node", "dist/main.js"]

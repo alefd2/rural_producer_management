@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Button,
@@ -75,7 +73,7 @@ export const UserModal = ({
         onSubmit={handleSubmituser}
         validationSchema={schemaValidation}
       >
-        {({ handleSubmit, errors }) => (
+        {({ handleSubmit }) => (
           <Form>
             <DialogTitle>{user.id ? user.name : " Novo usuário"}</DialogTitle>
             <Divider />

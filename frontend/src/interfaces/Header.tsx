@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
-import { Logout, Settings } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -13,7 +11,6 @@ import {
   MenuItem,
   Toolbar,
   Tooltip,
-  Typography,
   useScrollTrigger,
   MenuProps,
 } from "@mui/material";
@@ -21,7 +18,6 @@ import MuiAppBar from "@mui/material/AppBar";
 import { cloneElement, useState, MouseEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import { useGlobalContext } from "../contexts/GlobalContext";
 import { AuthContextType } from "../contexts/@types";
 
 const ElevationScroll = ({ children }: { children: React.ReactElement }) => {
@@ -57,37 +53,9 @@ const BreadcrumbItem = ({ to, label }: { to: string; label: string }) => {
   );
 };
 
-const paperProps: MenuProps = {
-  elevation: 0,
-  sx: {
-    width: "200px",
-    overflow: "hidden",
-    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-    mt: 2,
-    "& .MuiAvatar-root": {
-      width: 60,
-      height: 60,
-      marginTop: "-40px",
-    },
-    "&:before": {
-      content: '""',
-      display: "block",
-      position: "absolute",
-      top: 0,
-      right: 14,
-      width: 10,
-      height: 10,
-      bgcolor: "background.paper",
-      transform: "translateY(-50%) rotate(45deg)",
-      zIndex: 0,
-    },
-  },
-  open: false,
-};
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "width",
-})(({ theme }) => ({
+})(({}) => ({
   // zIndex: theme.zIndex.drawer - 1,
   width: "100%",
   display: "flex",
@@ -104,8 +72,6 @@ const Header = () => {
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
-  const navigate = useNavigate();
 
   const handleClose = () => {
     setAnchorEl(null);

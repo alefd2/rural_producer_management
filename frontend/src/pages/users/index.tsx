@@ -1,12 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import {
-  GridColDef,
-  GridRenderCellParams,
-  GridRowsProp,
-} from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { TableSimple } from "../../components/CustonTable/Index";
 import { Edit } from "@mui/icons-material";
 import { useState } from "react";
