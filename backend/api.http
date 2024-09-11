@@ -13,7 +13,7 @@ Content-Type: application/json
 @bearer = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJjbTB1a2d5cHcwMDAwNnFrcDZodzJyc212IiwidXNlck5hbWUiOiJhbGVmIG9saXYgMiIsImlhdCI6MTcyNTk5MjEwOSwiZXhwIjoxNzI2MDIyNzA5fQ.B-9qyNu5pR1pU7943LBZ8A8cgngEkCXyBLZKwWYFG4Q
 
 
-GET http://localhost:3000/users
+GET http://localhost:3000/users/
 
 
 ### List Users

@@ -32,6 +32,14 @@ export class ProducersService {
       );
     }
 
+    const userExists = await this.prismaService.users.findUnique({
+      where: { id: createProducerDto.usersId },
+    });
+
+    if (!userExists) {
+      throw new BadRequestException('Usuário não encontrado.');
+    }
+
     return await this.prismaService.ruralProducers.create({
       data: createProducerDto,
     });
@@ -41,9 +49,9 @@ export class ProducersService {
     return await this.prismaService.ruralProducers.findMany();
   }
 
-  async findAllByUserId(id: string) {
+  async findAllByUserId(userId: string) {
     return await this.prismaService.ruralProducers.findMany({
-      where: { id },
+      where: { usersId: userId },
     });
   }
 
