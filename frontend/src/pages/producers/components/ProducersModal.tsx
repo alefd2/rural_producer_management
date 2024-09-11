@@ -183,7 +183,7 @@ export const ProducersModal = ({
                     multiple
                     options={allowedCrops}
                     value={values.plantedCrops as string[]}
-                    onChange={(newValue) => {
+                    onChange={(_event, newValue) => {
                       setFieldValue(
                         "plantedCrops",
                         Array.isArray(newValue) ? newValue : []
