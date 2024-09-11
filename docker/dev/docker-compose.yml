@@ -21,43 +21,43 @@ services:
         #     - ./db/data/db-pg:/var/lib/postgresql/data
 
 
-    # rural-farm-api:
-    #     build: 
-    #         context: ../../backend
-    #         dockerfile: Dockerfile
-    #     container_name: rrural_farm_api
-    #     image: producers/rural_farm_api
-    #     restart: unless-stopped
-    #     depends_on: 
-    #         - postgres
-    #     logging:
-    #         options:
-    #             max-file: "5"
-    #             max-size: "20m"
-    #     environment:
-    #         - "JWT_SECRET=y@dcasds546@09-ds651asdc96as/4#2-02"
-    #         - "DATABASE_URL=postgresql://postgres:postgres*197@postgres:5432/postgres?schema=public"
-    #         - "TZ=America/Sao_Paulo"
-    #         - "PORT=4000"
-    #     ports:
-    #         - 4000:4000
+    rural-farm-api:
+        build: 
+            context: ../../backend
+            dockerfile: Dockerfile
+        container_name: rrural_farm_api
+        image: producers/rural_farm_api
+        restart: unless-stopped
+        depends_on: 
+            - postgres
+        logging:
+            options:
+                max-file: "5"
+                max-size: "20m"
+        environment:
+            - "JWT_SECRET=y@dcasds546@09-ds651asdc96as/4#2-02"
+            - "DATABASE_URL=postgresql://postgres:postgres*197@postgres:5432/postgres?schema=public"
+            - "TZ=America/Sao_Paulo"
+            - "PORT=4000"
+        ports:
+            - 4000:4000
    
-    # rural-farm-front-nginx:
-    #     container_name: rural_farm_front_nginx
-    #     build:
-    #         context: ../../web
-    #         dockerfile: Dockerfile
-    #     image: producers/rural_farm_front_nginx
-    #     restart: unless-stopped
-    #     depends_on:
-    #         - votes-api
-    #     logging:
-    #         options:
-    #             max-file: "5"
-    #             max-size: "20m"
-    #     environment:
-    #         - TZ=America/Sao_Paulo
-    #     network_mode: host
-    #     volumes:
-    #         - ./nginx/conf:/etc/nginx/conf.d:ro
-    #         - ../../web/dist/web/browser:/usr/share/nginx/html
+    rural-farm-front-nginx:
+        container_name: rural_farm_front_nginx
+        build:
+            context: ../../frontend
+            dockerfile: Dockerfile
+        image: producers/rural_farm_front_nginx
+        restart: unless-stopped
+        depends_on:
+            - rural-farm-api
+        logging:
+            options:
+                max-file: "5"
+                max-size: "20m"
+        environment:
+            - TZ=America/Sao_Paulo
+        network_mode: host
+        volumes:
+            - ./nginx/conf:/etc/nginx/conf.d:ro
+            - ../../web/dist/web/browser:/usr/share/nginx/html

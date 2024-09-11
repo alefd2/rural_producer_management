@@ -30,6 +30,6 @@ COPY package.json yarn.lock ./
 # Instala apenas as dependências de produção
 RUN yarn install --frozen-lockfile --production
 
-EXPOSE 4000
+EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
