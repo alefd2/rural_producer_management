@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import {
   Button,
@@ -9,7 +8,7 @@ import {
   DialogProps,
 } from "@mui/material";
 
-interface WrapperModalProps<T> {
+type WrapperModalProps = {
   proceed: (result: boolean) => void;
   open: boolean;
   title?: string;
@@ -17,11 +16,11 @@ interface WrapperModalProps<T> {
   okLabel?: string;
   dialogProps?: DialogProps;
   [key: string]: any;
-}
+};
 
 // DEFAULT COMPONENT
-const WrapperModal = <T extends object>(Component: React.FC<T>) => {
-  const ModalComponent: React.FC<WrapperModalProps<T>> = ({
+const WrapperModal = (Component: React.FC<any>) => {
+  const ModalComponent: React.FC<WrapperModalProps> = ({
     proceed,
     open,
     title,
@@ -34,7 +33,7 @@ const WrapperModal = <T extends object>(Component: React.FC<T>) => {
       <Dialog open={open} onClose={() => proceed(false)} {...dialogProps}>
         {title && <DialogTitle>{title}</DialogTitle>}
         <DialogContent>
-          <Component {...(props as T)} />
+          <Component {...props} />
         </DialogContent>
         <DialogActions>
           {cancelLabel && (
