@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { Paper } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomGridColDef, TableSimpleProps } from "./@types";

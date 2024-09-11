@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import { Box, useTheme } from "@mui/system";
 import useGetAllDashboard from "../../hooks/useDashboards/useGetAllData";
