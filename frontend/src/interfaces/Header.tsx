@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import styled from "@emotion/styled";
 import { Logout } from "@mui/icons-material";
 import {
@@ -12,11 +13,10 @@ import {
   Toolbar,
   Tooltip,
   useScrollTrigger,
-  MenuProps,
 } from "@mui/material";
 import MuiAppBar from "@mui/material/AppBar";
 import { cloneElement, useState, MouseEvent } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { AuthContextType } from "../contexts/@types";
 
@@ -32,7 +32,7 @@ const ElevationScroll = ({ children }: { children: React.ReactElement }) => {
   });
 };
 
-const LinkCustom = styled(Link)(({ theme }) => ({
+const LinkCustom = styled(Link)(({}) => ({
   padding: "3px 4px",
   textDecoration: "none",
   color: "ActiveBorder",

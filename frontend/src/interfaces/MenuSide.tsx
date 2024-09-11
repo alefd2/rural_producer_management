@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ExpandLess,
   ExpandMore,
@@ -12,7 +10,6 @@ import {
   Collapse,
   Divider,
   IconButton,
-  IconProps,
   List,
   ListItemText,
   Tooltip,
@@ -24,13 +21,7 @@ import { styled } from "@mui/material/styles";
 import useTheme from "@mui/material/styles/useTheme";
 import { Box } from "@mui/system";
 import { useEffect, useState } from "react";
-import {
-  Link,
-  useLocation,
-  useMatch,
-  useNavigate,
-  useResolvedPath,
-} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useGlobalContext } from "../contexts/GlobalContext";
 import { AuthContextType } from "../contexts/@types";
@@ -88,12 +79,10 @@ const MenuItem = ({
   const { menuOpen, dispatch } = useGlobalContext();
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
-  const resolverPath = useResolvedPath(to || "");
   const theme = useTheme();
   const navigate = useNavigate();
   const isActive =
     pathname === "/" ? to === pathname : pathname.replace("/", "") === to;
-  const match = useMatch({ path: resolverPath.pathname, end: true });
 
   const handleClick = () => {
     setOpen(!open);
@@ -174,7 +163,7 @@ const MenuItem = ({
 export const MenuSide = () => {
   const theme = useTheme();
   const { logoff } = useAuth() as AuthContextType;
-  const { menuOpen, dispatch } = useGlobalContext();
+  const { menuOpen } = useGlobalContext();
 
   return (
     <Drawer variant="permanent" open={menuOpen} sx={{ minWidth: "auto" }}>

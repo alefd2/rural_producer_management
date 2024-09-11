@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Select from "react-select";
 import { useField, useFormikContext } from "formik";
 import { StylesConfig } from "react-select";
-import React from "react";
 
 interface Option {
   value: string | number;

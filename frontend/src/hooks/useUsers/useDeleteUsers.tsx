@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQueryClient } from "react-query";
 import { useSnackbar } from "../../components/Snackbar";
 import { useApi } from "../../contexts/ApiContext";
@@ -15,7 +13,7 @@ const useDeleteUser = () => {
       return _delete(`/users/${user.id}`);
     },
     {
-      onSuccess: (_, { user, closeModal }) => {
+      onSuccess: (_, { closeModal }) => {
         queryClient.invalidateQueries(["users"]);
         setSuccess("Usuário deletado com sucesso");
         closeModal();

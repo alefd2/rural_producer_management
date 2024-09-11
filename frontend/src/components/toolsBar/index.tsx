@@ -1,20 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Add, Delete, Save } from "@mui/icons-material";
-import {
-  Button,
-  Divider,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Button, Grid, Paper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { Select } from "formik-mui";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 
 interface ToolsBarProps {
   hasStatusFilter?: boolean;
@@ -42,18 +30,6 @@ export const ToolsBar = ({
   inputLabel = "Pesquisar ",
   inputHelperText = "Pesquisar por id ou pelo nome do registro",
 }: ToolsBarProps) => {
-  const [age, setAge] = useState<string>("");
-
-  const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
-    setAge(event.target.value as string);
-  };
-
-  const options = [
-    { id: null, name: "Todos" },
-    { id: 1, name: "Ativo" },
-    { id: 0, name: "Inativo" },
-  ];
-
   return (
     <Box
       component={Paper}

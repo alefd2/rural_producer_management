@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useMutation, useQueryClient } from "react-query";
 import { useSnackbar } from "../../components/Snackbar";
 import { useApi } from "../../contexts/ApiContext";
-import { CreateProducersParams, CreateProducersResponse } from "./@types";
+import { CreateProducersResponse } from "./@types";
 import { AxiosError } from "axios";
 
 const useDeleteProducers = () => {
@@ -17,7 +15,7 @@ const useDeleteProducers = () => {
       return _delete(`/producers/${producers?.id}`);
     },
     {
-      onSuccess: (_, { producers }) => {
+      onSuccess: () => {
         queryClient.invalidateQueries(["producers"]);
         setSuccess("Produtor deletado com sucesso");
       },

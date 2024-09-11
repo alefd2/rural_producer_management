@@ -4,20 +4,17 @@ import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { TableSimple } from "../../components/CustonTable/Index";
 import { Edit } from "@mui/icons-material";
 import { useState } from "react";
-import { useModal } from "../../components/ConfirmModal";
-import useDeleteUser from "../../hooks/useUsers/useDeleteUsers";
 import useGetAllUsers from "../../hooks/useUsers/useGetAllUsers";
 import { UserModal } from "./components/UserModal";
 
 export function UsersPage() {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [userEdit, setUserEdit] = useState();
-  const [isPassChange, setIsPassChange] = useState(false);
+  const [isPassChange] = useState(false);
   // const debouncedFilter = useDebouncedValue(filter, 500);
-  const { data = [], isLoading } = useGetAllUsers();
+  const { data = [] } = useGetAllUsers();
 
-  const { confirm } = useModal();
-  const { mutate: deleteUser } = useDeleteUser();
+  // const { mutate: deleteUser } = useDeleteUser();
 
   const handleClose = () => setUserModalOpen(false);
 

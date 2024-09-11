@@ -46,7 +46,6 @@ const schemaValidation = yup.object().shape({
 });
 
 export const UserModal = ({
-  isPassChange,
   open,
   handleClose,
   user = initialUserValues,
@@ -140,11 +139,7 @@ interface FormikPasswordFieldProps {
   [key: string]: any;
 }
 
-const FormikPasswordField = ({
-  field,
-  form,
-  ...props
-}: FormikPasswordFieldProps) => {
+const FormikPasswordField = ({ field, ...props }: FormikPasswordFieldProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePasswordVisibility = () => {

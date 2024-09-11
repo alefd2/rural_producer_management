@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMutation, useQueryClient } from "react-query";
 import { useSnackbar } from "../../components/Snackbar";
 import { useApi } from "../../contexts/ApiContext";
@@ -16,7 +15,7 @@ const useUpdateUser = () => {
       return patch(`/users/${user.id}`, user);
     },
     {
-      onSuccess: (_, { user, closeModal }) => {
+      onSuccess: (_, { closeModal }) => {
         queryClient.invalidateQueries(["users"]);
         setSuccess("Usuário atualizado com sucesso");
         closeModal();
